@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vio</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="background">
+    <div class="background__parallax">
+      <video
+        id="bg-video"
+        class="background__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="assets/poster.jpg"
+      >
+        <source src="assets/background.mp4" type="video/mp4" />
+      </video>
+      <div class="background__overlay"></div>
+      <div class="background__scanlines"></div>
+      <div class="background__vignette"></div>
+    </div>
+  </div>
+
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <div id="boot-screen" class="boot">
+    <div class="boot__logo">prologue</div>
+    <div class="boot__bar"><div class="boot__bar-fill"></div></div>
+    <div class="boot__text">
+      <span class="boot__line">— tuning memories —</span>
+      <span class="boot__line">— gathering petals —</span>
+      <span class="boot__line">— almost ready —</span>
+      <span class="boot__line boot__line--ready">press any key to begin</span>
+    </div>
+  </div>
+
+  <header class="hud hud--top">
+    <div class="hud__brand">
+      <span class="hud__brand-mark"></span>
+      <span class="hud__brand-text">vio<small>·</small><i>etudes</i></span>
+    </div>
+    <div class="hud__status">
+      <button class="hud__theme" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <span class="hud__theme-icon hud__theme-icon--moon" aria-hidden="true">☾</span>
+        <span class="hud__theme-icon hud__theme-icon--sun"  aria-hidden="true">☀</span>
+        <span class="hud__theme-text" id="theme-toggle-text">night</span>
+      </button>
+      <span class="hud__sep">·</span>
+      <span class="hud__dot"></span>
+      <span>here &amp; now</span>
+      <span class="hud__sep">·</span>
+      <span id="hud-time">00:00</span>
+    </div>
+
+  </header>
+
+  <main class="layout" id="layout">
+
+    <section class="hero">
+      <div class="menu__title">
+        <span class="menu__title-sub">lets search the sky</span>
+        <h1 class="menu__title-main" data-text="violu">violu</h1>
+        <span class="menu__title-sub menu__title-sub--right">collide like two stars</span>
+      </div>
+
+      <nav class="menu__list" aria-label="Main menu">
+        <button class="menu__item" data-target="about">
+          <span class="menu__item-icon">❀</span>
+          <span class="menu__item-text">about me</span>
+          <span class="menu__item-hint">a portrait</span>
+        </button>
+        <button class="menu__item" data-target="now">
+          <span class="menu__item-icon">❀</span>
+          <span class="menu__item-text">now playing</span>
+          <span class="menu__item-hint">last.fm</span>
+        </button>
+        <button class="menu__item" data-target="links">
+          <span class="menu__item-icon">❀</span>
+          <span class="menu__item-text">links</span>
+          <span class="menu__item-hint">elsewhere</span>
+        </button>
+        <!--
+        <button class="menu__item" data-target="projects">
+          <span class="menu__item-icon">❀</span>
+          <span class="menu__item-text">works</span>
+          <span class="menu__item-hint">small worlds</span>
+        </button>
+        <button class="menu__item" data-target="skills">
+          <span class="menu__item-icon">❀</span>
+          <span class="menu__item-text">skills</span>
+          <span class="menu__item-hint">a quiet song</span>
+        </button>
+        -->
+        <button class="menu__item menu__item--danger" id="quit-btn">
+          <span class="menu__item-icon">✕</span>
+          <span class="menu__item-text">forget</span>
+          <span class="menu__item-hint">close your eyes</span>
+        </button>
+      </nav>
+    </section>
+
+    <aside class="dashboard" id="dashboard">
+      <div class="dashboard__track" id="dashboard-track">
+
+        <article class="dash-card dash-card--about" id="dash-about">
+          <header class="dash-card__head">
+            <span class="dash-card__tag">about</span>
+            <span class="dash-card__link" id="discord-state-tag" hidden></span>
+          </header>
+
+          <div class="profile">
+            <div class="profile__avatar" id="profile-avatar" data-status="offline">
+              <span class="profile__avatar-fallback">❀</span>
+              <span class="profile__status-dot" aria-hidden="true"></span>
+            </div>
+            <div class="profile__meta">
+              <h3 class="profile__name" id="profile-name">—</h3>
+              <p class="profile__sub" id="profile-sub"></p>
+            </div>
+          </div>
+
+          <div class="activity" id="activity" hidden>
+            <div class="activity__head">
+              <span class="activity__tag" id="activity-tag">activity</span>
+            </div>
+            <div class="activity__body">
+              <div class="activity__art">
+                <img id="activity-large" alt="" />
+                <img id="activity-small" alt="" class="activity__art-small" />
+              </div>
+              <div class="activity__meta">
+                <div class="activity__name" id="activity-name">—</div>
+                <div class="activity__detail" id="activity-detail"></div>
+                <div class="activity__state" id="activity-state"></div>
+                <div class="activity__time" id="activity-time"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="greetings" id="greetings" hidden>
+            <span class="greetings__tag">hello</span>
+            <div class="greetings__text" id="greetings-text"></div>
+          </div>
+        </article>
+
+        <article class="dash-card" id="dash-now">
+          <header class="dash-card__head">
+            <span class="dash-card__tag">now playing</span>
+            <a id="now-username" class="dash-card__link" href="#" target="_blank" rel="noopener">last.fm ↗</a>
+          </header>
+          <div id="now-content" class="now now--compact">
+            <div class="now__placeholder">— loading —</div>
+          </div>
+          <p class="dash-card__hint" id="now-updated"></p>
+        </article>
+
+        <article class="dash-card" id="dash-links">
+          <header class="dash-card__head">
+            <span class="dash-card__tag">find me</span>
+          </header>
+          <ul class="quick-links" id="links-list"></ul>
+        </article>
+      <!--
+
+        <article class="dash-card" id="dash-projects">
+          <header class="dash-card__head">
+            <span class="dash-card__tag">works</span>
+          </header>
+          <p class="dash-card__intro-line">A few small worlds I helped come to life:</p>
+          <div class="cards" id="projects-list"></div>
+        </article>
+
+
+        <article class="dash-card" id="dash-skills">
+          <header class="dash-card__head">
+            <span class="dash-card__tag">skills</span>
+          </header>
+          <p class="dash-card__intro-line">A small list of what I have at hand:</p>
+          <ul class="skills" id="skills-list"></ul>
+        </article>
+      -->
+      </div>
+    </aside>
+
+  </main>
+
+  <footer class="hud hud--bottom">
+    <div class="hud__hints">
+      <span class="hud__key">↑↓</span> <span>browse</span>
+      <span class="hud__sep">·</span>
+      <span class="hud__key"> ⏎ </span> <span>jump</span>
+      <span class="hud__sep">·</span>
+      <span class="hud__key">scroll</span> <span>scroll content</span>
+    </div>
+    <button id="sound-toggle" class="hud__sound" aria-label="Sound">
+      <span class="hud__sound-icon">♪</span>
+      <span class="hud__sound-text">melody · on</span>
+    </button>
+  </footer>
+
+  <audio id="sfx-hover" src="assets/hover.mp3" preload="auto"></audio>
+  <audio id="sfx-click" src="assets/click.mp3" preload="auto"></audio>
+  <audio id="bgm" src="assets/ambient.mp3" preload="auto" loop></audio>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
