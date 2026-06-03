@@ -1220,6 +1220,7 @@
 
   // --- init ---
   function init() {
+    console.log("init() called");
     setupVideoFallback();
     spawnParticles(30);
     document.documentElement.lang = "en";
@@ -1239,12 +1240,18 @@
 
     if (layoutEl) setTimeout(() => layoutEl.classList.add("is-mounted"), 2200);
 
+    console.log("About to call loadNowPlaying");
     loadNowPlaying();
     initDiscord();
   }
 
   if (document.readyState === "loading") {
+    console.log("Document still loading, waiting for DOMContentLoaded");
     document.addEventListener("DOMContentLoaded", init);
+  } else {
+    console.log("Document already loaded, calling init directly");
+    init();
+  }
   } else {
     init();
   }
