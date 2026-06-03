@@ -12,8 +12,3 @@ format = "service-worker"
 
 [env.production]
 vars = { LASTFM_API_KEY = "" }
-
-[site]
-bucket = "."
-include = ["*.html", "*.css", "assets/**", "config.js", "public/**"]
-exclude = ["functions/**", "index.js", "wrangler.toml", "*.md", ".git*"]

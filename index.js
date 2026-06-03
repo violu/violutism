@@ -9,8 +9,7 @@ export default {
       return lastfmHandler({ request, env }, context);
     }
     
-    // For all other requests, try to serve static files
-    // This is handled by Cloudflare Pages automatically
-    return env.ASSETS.fetch(request);
+    // Should not reach here due to _routes.json routing
+    return new Response('Not Found', { status: 404 });
   }
 };
