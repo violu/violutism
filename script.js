@@ -1,10 +1,12 @@
 (() => {
   "use strict";
+  console.log("script.js loaded");
 
   const $  = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
   const CONFIG = (window.SITE_CONFIG || {});
+  console.log("CONFIG:", CONFIG);
 
   (function applyStoredThemeEarly() {
     try {
