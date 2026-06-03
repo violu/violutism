@@ -621,7 +621,9 @@
   // --- last.fm ---
   function isLastfmConfigured() {
     const lf = CONFIG.lastfm || {};
-    return lf.username && !/^YOUR_/i.test(lf.username);
+    const isConfigured = lf.username && !/^YOUR_/i.test(lf.username);
+    console.log("Last.fm config check:", { username: lf.username, isConfigured });
+    return isConfigured;
   }
 
   function renderLastfmPlaceholder() {
