@@ -694,13 +694,18 @@
   }
 
   async function fetchRecentTracks() {
+    console.log("fetchRecentTracks called");
+    const url = buildLastfmUrl();
+    console.log("Fetching from:", url);
     try {
-      const res = await fetch(buildLastfmUrl(), { mode: "cors" });
+      const res = await fetch(url, { mode: "cors" });
+      console.log("Response:", res);
       if (!res.ok) throw new Error("last.fm http " + res.status);
       const data = await res.json();
       if (data.error) throw new Error(data.message || "last.fm error " + data.error);
       return (data.recenttracks && data.recenttracks.track) || [];
     } catch (e) {
+      console.error("fetchRecentTracks error:", e);
       const msg = String(e && e.message || e);
       if (/NetworkError|Failed to fetch|network|CORS/i.test(msg) || location.protocol === "file:") {
         return await lastfmJsonp();
