@@ -1,0 +1,19 @@
+name = "violutism"
+type = "javascript"
+main = "index.js"
+compatibility_date = "2024-12-19"
+
+[build]
+command = ""
+cwd = "./"
+
+[build.upload]
+format = "service-worker"
+
+[env.production]
+vars = { LASTFM_API_KEY = "" }
+
+[site]
+bucket = "."
+include = ["*.html", "*.css", "assets/**", "config.js", "public/**"]
+exclude = ["functions/**", "index.js", "wrangler.toml", "*.md", ".git*"]
