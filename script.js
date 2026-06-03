@@ -1,12 +1,10 @@
 (() => {
   "use strict";
-  console.log("script.js loaded");
 
   const $  = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
   const CONFIG = (window.SITE_CONFIG || {});
-  console.log("CONFIG:", CONFIG);
 
   (function applyStoredThemeEarly() {
     try {
@@ -623,9 +621,7 @@
   // --- last.fm ---
   function isLastfmConfigured() {
     const lf = CONFIG.lastfm || {};
-    const isConfigured = lf.username && !/^YOUR_/i.test(lf.username);
-    console.log("Last.fm config check:", { username: lf.username, isConfigured });
-    return isConfigured;
+    return lf.username && !/^YOUR_/i.test(lf.username);
   }
 
   function renderLastfmPlaceholder() {
@@ -694,21 +690,13 @@
   }
 
   async function fetchRecentTracks() {
-    console.log("fetchRecentTracks called");
-    const url = buildLastfmUrl();
-    console.log("Fetching from:", url);
     try {
-      const res = await fetch(url, { mode: "cors" });
-      console.log("Response:", res);
+      const res = await fetch(buildLastfmUrl(), { mode: "cors" });
       if (!res.ok) throw new Error("last.fm http " + res.status);
-      const text = await res.text();
-      console.log("Response text:", text);
-      const data = JSON.parse(text);
-      console.log("Parsed data:", data);
+      const data = await res.json();
       if (data.error) throw new Error(data.message || "last.fm error " + data.error);
       return (data.recenttracks && data.recenttracks.track) || [];
     } catch (e) {
-      console.error("fetchRecentTracks error:", e);
       const msg = String(e && e.message || e);
       if (/NetworkError|Failed to fetch|network|CORS/i.test(msg) || location.protocol === "file:") {
         return await lastfmJsonp();
@@ -1223,7 +1211,6 @@
 
   // --- init ---
   function init() {
-    console.log("init() called");
     setupVideoFallback();
     spawnParticles(30);
     document.documentElement.lang = "en";
@@ -1243,16 +1230,13 @@
 
     if (layoutEl) setTimeout(() => layoutEl.classList.add("is-mounted"), 2200);
 
-    console.log("About to call loadNowPlaying");
     loadNowPlaying();
     initDiscord();
   }
 
   if (document.readyState === "loading") {
-    console.log("Document still loading, waiting for DOMContentLoaded");
     document.addEventListener("DOMContentLoaded", init);
   } else {
-    console.log("Document already loaded, calling init directly");
     init();
   }
 })();
