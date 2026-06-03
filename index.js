@@ -9,7 +9,8 @@ export default {
       return lastfmHandler({ request, env }, context);
     }
     
-    // Default: return 404
-    return new Response('Not Found', { status: 404 });
+    // For all other requests, try to serve static files
+    // This is handled by Cloudflare Pages automatically
+    return env.ASSETS.fetch(request);
   }
 };
