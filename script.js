@@ -1255,7 +1255,4 @@
     console.log("Document already loaded, calling init directly");
     init();
   }
-  } else {
-    init();
-  }
 })();
