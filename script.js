@@ -701,7 +701,10 @@
       const res = await fetch(url, { mode: "cors" });
       console.log("Response:", res);
       if (!res.ok) throw new Error("last.fm http " + res.status);
-      const data = await res.json();
+      const text = await res.text();
+      console.log("Response text:", text);
+      const data = JSON.parse(text);
+      console.log("Parsed data:", data);
       if (data.error) throw new Error(data.message || "last.fm error " + data.error);
       return (data.recenttracks && data.recenttracks.track) || [];
     } catch (e) {
